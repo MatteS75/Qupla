@@ -1,0 +1,47 @@
+﻿<Window x:Class="Qupla.IndicatorServer.TrayClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:q="clr-namespace:Qupla.IndicatorServer.TrayClient"
+        Title="MainWindow" Height="224" Width="700" WindowState="Minimized">
+    <Window.Resources>
+        <q:IndicatorStates x:Key="IndicatorStates"></q:IndicatorStates>
+        <q:StringToBrushConverter x:Key="StringToBrushConverter"></q:StringToBrushConverter>
+    </Window.Resources>
+    <ItemsControl ItemsSource="{Binding Source={StaticResource IndicatorStates}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel Name="wrapPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5 5 0 0"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="30" Height="30" HorizontalAlignment="Left" 
+                            Fill="{Binding Color, Converter={StaticResource StringToBrushConverter}}" />
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Requested:"></TextBlock>
+                        <TextBlock Text="{Binding RequestTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Updated:"></TextBlock>
+                        <TextBlock Text="{Binding UpdateTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"></TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Message}"></TextBlock>
+                    <Expander>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" MaxWidth="300" MaxHeight="300">
+                            <TextBlock Text="{Binding Content}"></TextBlock>
+                        </ScrollViewer>
+                    </Expander>
+                </StackPanel>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</Window>
